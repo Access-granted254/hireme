@@ -387,66 +387,229 @@ function Dashboard() {
             </section>
           </>
         ) : person?.is_developer ? (
-          <></>
-        ) : null}
-        <section>
-          {/* profile */}
-          <div className="mb-3">
-            {person.is_developer ? (
-              <>
-                <div className="card mt-3">
-                  <div className="card-body">
-                    <h5 className="card-title">Professional Profile</h5>
-                    {!proProfile?.github &&
-                    !proProfile?.linkedin &&
-                    !proProfile?.website &&
-                    !proProfile?.twitter &&
-                    !proProfile?.skills ? (
-                      <>
-                        <p className="card-text">Update Professional Profile</p>
-                        <Link
-                          to={links?.Profile}
-                          className="btn btn-outline-primary btn-sm"
-                        >
-                          Update
-                        </Link>
-                      </>
-                    ) : (
-                      <>
-                        <p className="card-text">{proProfile?.role}</p>
-                        <Link className="card-link" to={proProfile?.github}>
-                          Github
-                        </Link>
-                        <Link className="card-link" to={proProfile?.linkedin}>
-                          Linkedin
-                        </Link>
-                        <Link className="card-link" to={proProfile?.twitter}>
-                          Twitter
-                        </Link>
-                        <Link className="card-link" to={proProfile?.website}>
-                          Website
-                        </Link>
-                        <p className="card-text">{proProfile?.skills}</p>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </>
-            ) : null}
-          </div>
-          {/* end of profile */}
+          // DEVELOPER SECTION
+          <>
+            <section className="row">
+              <div className="col-md-3 col-sm-12 py-2">
+                <section>
+                  <h3 className="fw-bold mb-3">Developer Information</h3>
+                  <hr />
+                  {/* personal profile */}
+                  <div className="card mb-3">
+                    <div className="card-body">
+                      <div>
+                        {!person?.image ? (
+                          <>
+                            <img
+                              src={avatarImage}
+                              alt=""
+                              className="avatar-image mb-2"
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <img
+                              src={person?.image}
+                              alt=""
+                              className="avatar-image mb-2"
+                            />
+                          </>
+                        )}
+                      </div>
+                      <h5 className="card-title fw-semibold">
+                        {person?.username}
+                      </h5>
+                      {person?.firstname !== null &&
+                      person?.lastname !== null ? (
+                        <>
+                          <p className="card-text">
+                            {person?.firstname} {person?.lastname}
+                          </p>
+                        </>
+                      ) : null}
+                      <p className="card-text">{person?.email}</p>
+                      <Button
+                        variant="outline-primary btn-sm"
+                        onClick={handleShow}
+                      >
+                        Update Profile
+                      </Button>
 
-          <div className="mb-3">
-            {person.is_client ? (
-              <></>
-            ) : person.is_developer ? (
-              <>
+                      {/* profile modal */}
+                      <Modal show={show} onHide={handleClose}>
+                        <div className="modal-header">
+                          <h5 className="modal-title">Update your profile</h5>
+                          <button
+                            type="button"
+                            className="btn-close"
+                            onClick={handleClose}
+                          ></button>
+                        </div>
+
+                        <div className="modal-body">
+                          <Formik
+                            initialValues={{
+                              image: person?.image,
+                              firstname: person?.firstname,
+                              lastname: person?.lastname,
+                              about: person?.about,
+                            }}
+                            onSubmit={async (values) => {
+                              const formData = new FormData();
+                              if (values?.image) {
+                                formData.append("image", values?.image);
+                              }
+                              formData.append("firstname", values?.firstname);
+                              formData.append("lastname", values?.lastname);
+                              formData.append("about", values?.about);
+                              try {
+                                await localApi.patch(
+                                  `profile/${user?.user_id}/`,
+                                  formData,
+                                  config
+                                );
+                                toast.success(
+                                  "Profile Updated. Refresh to see changes"
+                                );
+                                setShow(false);
+                                window.location.reload();
+                              } catch (error) {
+                                toast.error("Please Try again");
+                              }
+                            }}
+                          >
+                            {({ setFieldValue }) => (
+                              <Form>
+                                {/* image */}
+                                <div className="mb-3">
+                                  <label htmlFor="image" className="form-label">
+                                    Profile Picture
+                                  </label>
+                                  <input
+                                    type="file"
+                                    className="form-control"
+                                    onChange={(event) => {
+                                      setFieldValue(
+                                        "image",
+                                        event.target.files[0]
+                                      );
+                                    }}
+                                  />
+                                </div>
+
+                                {/* firstname */}
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="firstname"
+                                    className="form-label"
+                                  >
+                                    First Name
+                                  </label>
+                                  <Field
+                                    className="form-control"
+                                    name="firstname"
+                                  />
+                                </div>
+
+                                {/* lastname */}
+                                <div className="mb-3">
+                                  <label
+                                    htmlFor="lastname"
+                                    className="form-label"
+                                  >
+                                    Last Name
+                                  </label>
+                                  <Field
+                                    className="form-control"
+                                    name="lastname"
+                                  />
+                                </div>
+
+                                {/* about */}
+                                <div className="mb-3">
+                                  <label htmlFor="about" className="form-label">
+                                    About
+                                  </label>
+                                  <Field
+                                    className="form-control"
+                                    name="about"
+                                    as="textarea"
+                                  />
+                                </div>
+
+                                <div className="modal-footer">
+                                  <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={handleClose}
+                                  >
+                                    Close
+                                  </button>
+                                  <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                  >
+                                    Update
+                                  </button>
+                                </div>
+                              </Form>
+                            )}
+                          </Formik>
+                        </div>
+                      </Modal>
+                    </div>
+                  </div>
+
+                  <hr />
+                  <div className="card mb-3">
+                    <div className="card-body">
+                      <h5 className="card-title">Professional Profile</h5>
+                      {!proProfile?.github &&
+                      !proProfile?.linkedin &&
+                      !proProfile?.website &&
+                      !proProfile?.twitter &&
+                      !proProfile?.skills ? (
+                        <>
+                          <p className="card-text">
+                            Update Professional Profile
+                          </p>
+                          <Link
+                            to={links?.Profile}
+                            className="btn btn-outline-primary btn-sm"
+                          >
+                            Update
+                          </Link>
+                        </>
+                      ) : (
+                        <>
+                          <p className="card-text">{proProfile?.role}</p>
+                          <Link className="card-link" to={proProfile?.github}>
+                            Github
+                          </Link>
+                          <Link className="card-link" to={proProfile?.linkedin}>
+                            Linkedin
+                          </Link>
+                          <Link className="card-link" to={proProfile?.twitter}>
+                            Twitter
+                          </Link>
+                          <Link className="card-link" to={proProfile?.website}>
+                            Website
+                          </Link>
+                          <p className="card-text">{proProfile?.skills}</p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              {/* end of profile section */}
+
+              {/* main section */}
+              <div className="col-md-9 col-sm-12 py-2">
                 <div className="d-flex align-items-center justify-content-between">
                   <div>
-                    <h5 className="text-uppercase">Available Projects</h5>
-                    <p className="fst-italic">
-                      Place bids on projects for clients to hire you.
-                    </p>
+                    <h3>Available Projects</h3>
                   </div>
 
                   <div>
@@ -459,7 +622,6 @@ function Dashboard() {
                   </div>
                 </div>
                 <hr />
-
                 <section className="mb-3 mt-2">
                   {availableProjects?.count === 0 ? (
                     <p className="text-secondary">No projects available yet</p>
@@ -499,10 +661,13 @@ function Dashboard() {
                     </>
                   )}
                 </section>
-              </>
-            ) : null}
-          </div>
-        </section>
+              </div>
+
+              {/* end of main section */}
+            </section>
+          </>
+        ) : null}
+
       </div>
     </>
   );
