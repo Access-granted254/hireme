@@ -1,9 +1,9 @@
-import React, { Suspense, useContext } from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { links } from "./links";
-import { AuthContext } from "../authContext";
 import Navbar from "../layouts/Navbar";
 import PrivateRoute from "../middleware/PrivateRoute";
+import Footer from "../layouts/Footer";
 
 const Splash = React.lazy(() => import("../pages/Splash"));
 const Login = React.lazy(() => import("../pages/Login"));
@@ -47,6 +47,7 @@ function BaseRouter() {
             <Route path={links?.Bids} element={<Bids />} />
           </Route>
         </Routes>
+        <Footer />
       </Suspense>
     </Router>
   );

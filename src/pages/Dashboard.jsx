@@ -110,8 +110,6 @@ function Dashboard() {
     fetchTenProjects();
   }, [user]);
 
-  console.log(tenProjects);
-
   const pendingProjects = projects?.results?.filter(
     (project) => project.project_progress === "Pending"
   );
@@ -125,7 +123,7 @@ function Dashboard() {
   );
   return (
     <>
-      <div className="container-fluid py-3 px-3">
+      <div className="container-fluid py-3 px-3 page">
         {person?.is_client ? (
           <>
             <section className="row">
@@ -133,10 +131,11 @@ function Dashboard() {
               <div className="col-md-3 col-sm-12 py-2">
                 <section>
                   <h3 className="fw-bold mb-3">Client Information</h3>
+                  <hr />
                   <div className="card">
                     <div className="card-body">
                       <div>
-                        {person?.image ? (
+                        {!person?.image ? (
                           <>
                             <img
                               src={avatarImage}
