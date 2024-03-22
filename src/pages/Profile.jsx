@@ -5,7 +5,7 @@ import { AuthContext } from "../authContext";
 import { Field, Form, Formik } from "formik";
 import { localApi } from "../api/axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { links } from "../constants/links";
 
 function Profile() {
@@ -44,7 +44,14 @@ function Profile() {
         <p className="text-secondary text-uppercase mb-0">
           What the client sees
         </p>
-        <h2 className="fw-bold mb-0">Profile</h2>
+        <h2 className="fw-bold mb-0">
+          <span>
+            <Link to={links?.Dashboard}>
+              <i className="bi bi-arrow-left"></i>
+            </Link>
+          </span>
+          Profile
+        </h2>
         <hr />
       </div>
       <section>

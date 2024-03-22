@@ -32,27 +32,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const updateUser = async () => {
-    try {
-      const response = await axios.post(urls.REFRESH, {
-        refresh: tokens.refresh,
-      });
-      setTokens(response.data);
-      setUser(jwtDecode(response.data.access));
-      setIsSignedIn(true);
-      localStorage.setItem("tokens", JSON.stringify(response.data));
-    } catch (error) {
-      // Handle errors, e.g., redirect to login page
-      <Navigate to={links.Login} replace />;
-    }
-  };
-
-  useEffect(() => {
-    if (tokens) {
-      updateUser();
-    }
-  }, [tokens]);
-
   return (
     <AuthContext.Provider
       value={{ user, loginUser, tokens, logout, isSignedIn }}

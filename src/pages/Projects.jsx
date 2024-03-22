@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { AuthContext } from "../authContext";
 import { localProjectApi } from "../api/axios";
-import { urls } from "../constants/links";
+import { links, urls } from "../constants/links";
 import { Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -81,7 +81,14 @@ function Projects() {
   return (
     <div className="container py-3">
       <section>
-        <h5 className="text-secondary text-uppercase mb-2">Projects</h5>
+        <h5 className="text-secondary text-uppercase mb-2">
+          <span>
+            <Link to={links?.Dashboard} className="btn">
+              <i className="bi bi-arrow-left"></i>
+            </Link>
+          </span>
+          Projects
+        </h5>
 
         <div className="d-flex align-items-center justify-content-between mb-3">
           <h3 className="fw-bold">Your Projects</h3>

@@ -17,7 +17,6 @@ const ProjectDetails = React.lazy(() => import("../pages/ProjectDetails"));
 const Bids = React.lazy(() => import("../pages/Bids"));
 
 function BaseRouter() {
-  const { tokens } = useContext(AuthContext);
   return (
     <Router>
       <Suspense
@@ -31,20 +30,13 @@ function BaseRouter() {
       >
         <Navbar />
         <Routes>
-          {tokens ? (
-            <>
-              <Route exact path={links?.Dashboard} element={<Dashboard />} />
-            </>
-          ) : (
-            <>
-              <Route exact path={links?.Splash} element={<Splash />} />
-            </>
-          )}
+          <Route exact path={links?.Splash} element={<Splash />} />
           <Route path={links?.Login} element={<Login />} />
           <Route path={links?.Register} element={<Register />} />
           <Route path={links?.Developer} element={<Developer />} />
 
           <Route element={<PrivateRoute />}>
+            <Route path={links?.Dashboard} element={<Dashboard />} />
             <Route path={links?.Profile} element={<Profile />} />
             <Route path={links?.Projects} element={<Projects />} />
             <Route
