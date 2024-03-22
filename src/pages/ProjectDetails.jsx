@@ -67,146 +67,148 @@ function ProjectDetails() {
   }, [projectDetail?.slug, user, fetchBids]);
 
   return (
-    <div className="container">
-      <section>
-        <h5 className="text-secondary text-uppercase mb-2">
-          <span>
-            <Link to={links.Dashboard} className="btn">
-              <i className="bi bi-arrow-left"></i>
-            </Link>
-          </span>
-          Project Detail
-        </h5>
-        <h3 className="fw-bold">{projectDetail?.name}</h3>
-        <div className="btn-group" role="group">
-          <button className="btn btn-sm btn-outline-primary">
-            {projectDetail?.project_category}
-          </button>
-          <button className="btn btn-sm btn-outline-primary">
-            {projectDetail?.project_type}
-          </button>
-          <button className="btn btn-sm btn-outline-primary">
-            {projectDetail?.project_duration}
-          </button>
-        </div>
-        <hr />
-      </section>
-
-      <section className="mt-3">
-        <div className="row">
-          <div className="col-md-7 col-sm-12">
-            <article className="mb-3">
-              <h5 className="fw-bold">Description</h5>
-              <p>{projectDetail?.description}</p>
-              {projectDetail?.file ? (
-                <>
-                  <p className="mb-0">
-                    File:{" "}
-                    <a
-                      href={projectDetail?.file}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Click here
-                    </a>
-                  </p>
-                </>
-              ) : null}
-              <p className="fst-italic">
-                Progress: {projectDetail?.project_progress}
-              </p>
-              <p>
-                <strong>Price Range: </strong>
-                {projectDetail?.min_price} - {projectDetail?.max_price}
-              </p>
-            </article>
+    <div className="container-fluid page">
+      <div className="container">
+        <section>
+          <h5 className="text-secondary text-uppercase mb-2">
+            <span>
+              <Link to={links.Dashboard} className="btn">
+                <i className="bi bi-arrow-left"></i>
+              </Link>
+            </span>
+            Project Detail
+          </h5>
+          <h3 className="fw-bold">{projectDetail?.name}</h3>
+          <div className="btn-group" role="group">
+            <button className="btn btn-sm btn-outline-primary">
+              {projectDetail?.project_category}
+            </button>
+            <button className="btn btn-sm btn-outline-primary">
+              {projectDetail?.project_type}
+            </button>
+            <button className="btn btn-sm btn-outline-primary">
+              {projectDetail?.project_duration}
+            </button>
           </div>
+          <hr />
+        </section>
 
-          <div className="col-md-5 col-sm-12">
-            <article className="mb-3">
-              <h5 className="fw-bold">Place Bid</h5>
-              <hr />
-              {hasBid ? (
-                <>
-                  <p className="p-3 bg-success text-white">
-                    You have already bid on this project
-                  </p>
-                </>
-              ) : (
-                <>
-                  {projectDetail.slug && (
-                    <Formik
-                      initialValues={{
-                        project: projectDetail?.slug,
-                        proposal: "",
-                        file: "",
-                      }}
-                      onSubmit={async (values) => {
-                        const formData = new FormData();
+        <section className="mt-3">
+          <div className="row">
+            <div className="col-md-7 col-sm-12">
+              <article className="mb-3">
+                <h5 className="fw-bold">Description</h5>
+                <p>{projectDetail?.description}</p>
+                {projectDetail?.file ? (
+                  <>
+                    <p className="mb-0">
+                      File:{" "}
+                      <a
+                        href={projectDetail?.file}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Click here
+                      </a>
+                    </p>
+                  </>
+                ) : null}
+                <p className="fst-italic">
+                  Progress: {projectDetail?.project_progress}
+                </p>
+                <p>
+                  <strong>Price Range: </strong>
+                  {projectDetail?.min_price} - {projectDetail?.max_price}
+                </p>
+              </article>
+            </div>
 
-                        formData.append("project", values?.project);
-                        formData.append("proposal", values?.proposal);
-                        if (values?.file) {
-                          formData.append("file", values?.file);
-                        }
-                        try {
-                          await localProjectApi.post(
-                            urls?.BID,
-                            formData,
-                            config
-                          );
-                          toast.success("Bid created successfully");
-                          window.location.reload();
-                        } catch (error) {}
-                      }}
-                    >
-                      {({ setFieldValue }) => (
-                        <Form>
-                          <div className="mb-3">
-                            <label htmlFor="proposal" className="form-label">
-                              Proposal<sup className="text-danger">*</sup>
-                            </label>
-                            <Field
-                              className="form-control"
-                              id="proposal"
-                              name="proposal"
-                              as="textarea"
-                              rows={6}
-                            />
-                          </div>
+            <div className="col-md-5 col-sm-12">
+              <article className="mb-3">
+                <h5 className="fw-bold">Place Bid</h5>
+                <hr />
+                {hasBid ? (
+                  <>
+                    <p className="p-3 bg-success text-white">
+                      You have already bid on this project
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    {projectDetail.slug && (
+                      <Formik
+                        initialValues={{
+                          project: projectDetail?.slug,
+                          proposal: "",
+                          file: "",
+                        }}
+                        onSubmit={async (values) => {
+                          const formData = new FormData();
 
-                          <div className="mb-3">
-                            <label htmlFor="file" className="form-label">
-                              File (upload resume, cover letter or past work if
-                              any, in .pdf)
-                            </label>
-                            <input
-                              type="file"
-                              className="form-control"
-                              onChange={(event) => {
-                                setFieldValue("file", event.target.files[0]);
-                              }}
-                            />
-                          </div>
+                          formData.append("project", values?.project);
+                          formData.append("proposal", values?.proposal);
+                          if (values?.file) {
+                            formData.append("file", values?.file);
+                          }
+                          try {
+                            await localProjectApi.post(
+                              urls?.BID,
+                              formData,
+                              config
+                            );
+                            toast.success("Bid created successfully");
+                            window.location.reload();
+                          } catch (error) {}
+                        }}
+                      >
+                        {({ setFieldValue }) => (
+                          <Form>
+                            <div className="mb-3">
+                              <label htmlFor="proposal" className="form-label">
+                                Proposal<sup className="text-danger">*</sup>
+                              </label>
+                              <Field
+                                className="form-control"
+                                id="proposal"
+                                name="proposal"
+                                as="textarea"
+                                rows={6}
+                              />
+                            </div>
 
-                          <div className="text-end">
-                            <button
-                              type="submit"
-                              className="btn btn-sm btn-outline-primary"
-                            >
-                              Submit
-                            </button>
-                          </div>
-                        </Form>
-                      )}
-                    </Formik>
-                  )}
-                </>
-              )}
-            </article>
+                            <div className="mb-3">
+                              <label htmlFor="file" className="form-label">
+                                File (upload resume, cover letter or past work
+                                if any, in .pdf)
+                              </label>
+                              <input
+                                type="file"
+                                className="form-control"
+                                onChange={(event) => {
+                                  setFieldValue("file", event.target.files[0]);
+                                }}
+                              />
+                            </div>
+
+                            <div className="text-end">
+                              <button
+                                type="submit"
+                                className="btn btn-sm btn-outline-primary"
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          </Form>
+                        )}
+                      </Formik>
+                    )}
+                  </>
+                )}
+              </article>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }
