@@ -1,9 +1,9 @@
-import React, { Suspense, useContext } from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { links } from "./links";
-import { AuthContext } from "../authContext";
 import Navbar from "../layouts/Navbar";
 import PrivateRoute from "../middleware/PrivateRoute";
+import Footer from "../layouts/Footer";
 
 const Splash = React.lazy(() => import("../pages/Splash"));
 const Login = React.lazy(() => import("../pages/Login"));
@@ -17,7 +17,6 @@ const ProjectDetails = React.lazy(() => import("../pages/ProjectDetails"));
 const Bids = React.lazy(() => import("../pages/Bids"));
 
 function BaseRouter() {
-  const { tokens } = useContext(AuthContext);
   return (
     <Router>
       <Suspense
@@ -31,20 +30,13 @@ function BaseRouter() {
       >
         <Navbar />
         <Routes>
-          {tokens ? (
-            <>
-              <Route exact path={links?.Dashboard} element={<Dashboard />} />
-            </>
-          ) : (
-            <>
-              <Route exact path={links?.Splash} element={<Splash />} />
-            </>
-          )}
+          <Route exact path={links?.Splash} element={<Splash />} />
           <Route path={links?.Login} element={<Login />} />
           <Route path={links?.Register} element={<Register />} />
           <Route path={links?.Developer} element={<Developer />} />
 
           <Route element={<PrivateRoute />}>
+            <Route path={links?.Dashboard} element={<Dashboard />} />
             <Route path={links?.Profile} element={<Profile />} />
             <Route path={links?.Projects} element={<Projects />} />
             <Route
@@ -55,6 +47,7 @@ function BaseRouter() {
             <Route path={links?.Bids} element={<Bids />} />
           </Route>
         </Routes>
+        <Footer />
       </Suspense>
     </Router>
   );

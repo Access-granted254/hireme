@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const ACCOUNTS_URL = "";
+const ACCOUNTS_URL = "http://127.0.0.1:8000/v1/users/";
+const PROJECTS_URL = "http://127.0.0.1:8000/v1/hire/";
 const LOCAL_ACCOUNTS_URL = "https://hire-a-developer.onrender.com/v1/users/";
 const LOCAL_PROJECTS_URL = "https://hire-a-developer.onrender.com/v1/hire/";
 
@@ -17,13 +18,13 @@ export const api = axios.create({
 });
 
 export const localApi = axios.create({
-  baseURL: LOCAL_ACCOUNTS_URL,
+  baseURL: ACCOUNTS_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 
 export const localProjectApi = axios.create({
-  baseURL: LOCAL_PROJECTS_URL,
+  baseURL: PROJECTS_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });

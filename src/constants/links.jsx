@@ -1,5 +1,5 @@
 const links = {
-  Dashboard: "/",
+  Dashboard: "/dashboard",
   Splash: "/",
   Login: "/login",
   Register: "/register",
@@ -19,6 +19,7 @@ const urls = {
   PROJECTS: "projects/",
   AVAILABLEPROJECTS: "all-projects/",
   BID: "bids/",
+  TEN: "ten-projects/",
 };
 
 export { links, urls };
