@@ -30,9 +30,9 @@ function Navbar() {
   }, [user]);
   return (
     <>
-      <nav className="navbar sticky-top border-bottom bg-dark">
+      <nav className="navbar sticky-top border-bottom bg-white">
         <div className="container-fluid">
-          <Link className="navbar-brand fw-bold text-white">HireNest</Link>
+          <Link className="navbar-brand fw-bold ">HireNest</Link>
           <button
             className="navbar-toggler bg-light-subtle"
             type="button"
