@@ -5,6 +5,7 @@ import { AuthContext } from "../authContext";
 import { Field, Form, Formik } from "formik";
 import { LoginSchema } from "../validation/validation";
 import { toast } from "react-toastify";
+import loginImage from "../assets/images/login/login.jpg";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,8 +13,13 @@ function Login() {
   return (
     <>
       <div
-        className="container d-flex flex-column align-items-center justify-content-center"
-        style={{ height: "100vh" }}
+        className="container-fluid d-flex flex-column align-items-center justify-content-center"
+        style={{
+          height: "100vh",
+          backgroundImage: `url(${loginImage})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
       >
         <div className="d-flex align-items-center justify-content-center">
           <Formik
@@ -30,7 +36,7 @@ function Login() {
             }}
           >
             {({ errors, touched }) => (
-              <Form className="shadow-lg rounded border px-5 pb-5 pt-3">
+              <Form className="shadow-lg rounded border px-5 pb-5 bg-white pt-3">
                 <div>
                   <h5 className="fw-bold">Login</h5>
                   <hr />
