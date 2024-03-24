@@ -16,7 +16,7 @@ function Splash() {
             <>
               <div className="row align-items-center justify-content-center">
                 <div className="col-md-6 col-sm-12 mb-3">
-                  <h1 className="fw-bolder ">HireMe</h1>
+                  <h1 className="fw-bolder ">HireNest</h1>
                   <h3>The Application that connects developers to clients.</h3>
                   <p>
                     Machine Learning | Web Development | Artificial Intelligence

@@ -18,7 +18,6 @@ function VerifyEmail() {
     }
   };
 
-  console.log(token);
   return (
     <>
       <div className="container">
