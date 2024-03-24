@@ -7,25 +7,25 @@ const ACCOUNTS_URL = "https://hire-a-developer.onrender.com/v1/users/";
 const PROJECTS_URL = "https://hire-a-developer.onrender.com/v1/hire/";
 
 export default axios.create({
-  baseURL: LOCAL_ACCOUNTS_URL,
+  baseURL: ACCOUNTS_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 
 export const api = axios.create({
-  baseURL: LOCAL_ACCOUNTS_URL,
+  baseURL: ACCOUNTS_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 
 export const localApi = axios.create({
-  baseURL: LOCAL_ACCOUNTS_URL,
+  baseURL: ACCOUNTS_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
 
 export const localProjectApi = axios.create({
-  baseURL: LOCAL_PROJECTS_URL,
+  baseURL: PROJECTS_URL,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });

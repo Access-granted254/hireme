@@ -20,6 +20,8 @@ function Dashboard() {
   const [availableProjects, setAvailableProjects] = useState([]);
   const [proProfile, setProProfile] = useState([]);
   const [tenProjects, setTenProjects] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -110,7 +112,7 @@ function Dashboard() {
     fetchTenProjects();
   }, [user]);
 
-  const pendingProjects = projects?.results?.filter(
+  const pendingProjects = tenProjects?.results?.filter(
     (project) => project.project_progress === "Pending"
   );
 
@@ -121,6 +123,22 @@ function Dashboard() {
   const completedProjects = projects?.results?.filter(
     (project) => project.project_progress === "Completed"
   );
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    if (query.trim() === "") {
+      setSearchResults([]);
+      return;
+    }
+
+    const filteredResults = projects?.results?.filter((project) =>
+      project?.name?.toLowerCase().includes(query)
+    );
+    setSearchResults(filteredResults);
+  };
+
   return (
     <>
       <div className="container-fluid py-3 px-3 page">
@@ -612,6 +630,42 @@ function Dashboard() {
                     <h3>Available Projects</h3>
                   </div>
 
+                  {/* <div>
+                    <form role="search" className="d-flex">
+                      <input
+                        type="search"
+                        name="search"
+                        id="search"
+                        className="form-control me-2 py-2"
+                        placeholder="Search Projects"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                      />
+                      <button className="btn btn-outline-success" type="submit">
+                        Search
+                      </button>
+                    </form>
+                    {searchQuery?.trim() === "" ? (
+                      <></>
+                    ) : searchResults?.length > 0 ? (
+                      searchResults?.map((project) => (
+                        <>
+                          <div className="card">
+                            <div className="card-body">
+                              <h6 className="card-title">{project?.name}</h6>
+                            </div>
+                          </div>
+                        </>
+                      ))
+                    ) : (
+                      <>
+                        <p className="bg-danger fw-bold p-2 text-white">
+                          No Projects Found
+                        </p>
+                      </>
+                    )}
+                  </div> */}
+
                   <div>
                     <Link
                       to={links?.Bids}
@@ -667,7 +721,6 @@ function Dashboard() {
             </section>
           </>
         ) : null}
-
       </div>
     </>
   );
