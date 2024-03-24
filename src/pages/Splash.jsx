@@ -22,30 +22,52 @@ function Splash() {
           }}
         ></div>
         <div className="col-md-6 col-sm-12">
-          <div className="d-flex align-items-start p-5 justify-content-start">
-            <div className="d-flex flex-column">
-              <div className="mb-3">
-                <h3 className="fw-bold mb-3">Get Started on HireNest</h3>
+          {user ? (
+            <>
+              <div className="d-flex align-items-start p-5 justify-content-start">
+                <div className="d-flex flex-column">
+                  <div className="mb-3">
+                    <h3 className="fw-bold mb-3">Get Moving on HireNest</h3>
+                  </div>
+                  <div className="mb-3">
+                    <Link
+                      to={links?.Dashboard}
+                      className="btn btn-dark w-100 rounded-pill btn-lg"
+                    >
+                      Dashboard
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="mb-3">
-                <Link
-                  to={links?.Login}
-                  className="btn btn-dark w-100 rounded-pill btn-lg"
-                >
-                  Sign In
-                </Link>
+            </>
+          ) : (
+            <>
+              <div className="d-flex align-items-start p-5 justify-content-start">
+                <div className="d-flex flex-column">
+                  <div className="mb-3">
+                    <h3 className="fw-bold mb-3">Get Started on HireNest</h3>
+                  </div>
+                  <div className="mb-3">
+                    <Link
+                      to={links?.Login}
+                      className="btn btn-dark w-100 rounded-pill btn-lg"
+                    >
+                      Sign In
+                    </Link>
+                  </div>
+                  <hr className="mb-3" />
+                  <div className="mb-3">
+                    <Link
+                      to={links?.Register}
+                      className="btn btn-outline-dark w-100 rounded-pill btn-lg"
+                    >
+                      Create Account
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <hr className="mb-3" />
-              <div className="mb-3">
-                <Link
-                  to={links?.Register}
-                  className="btn btn-outline-dark w-100 rounded-pill btn-lg"
-                >
-                  Create Account
-                </Link>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
         <div className="col-md-3 col-sm-12"></div>
       </div>
