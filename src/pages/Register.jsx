@@ -5,7 +5,7 @@ import { Field, Form, Formik } from "formik";
 import { RegistrationSchema } from "../validation/validation";
 import { localApi } from "../api/axios";
 import { toast } from "react-toastify";
-import signInImage from "../assets/images/login/signup.jpg"
+import signInImage from "../assets/images/login/signup.jpg";
 
 function Register() {
   const navigate = useNavigate();
@@ -13,7 +13,12 @@ function Register() {
     <>
       <div
         className="container-fluid d-flex flex-column align-items-center justify-content-center"
-        style={{ height: "100vh", backgroundImage: `url(${signInImage})`, backgroundPosition: "center", backgroundSize: "cover" }}
+        style={{
+          height: "100vh",
+          backgroundImage: `url(${signInImage})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
       >
         <div className="d-flex align-items-center justify-content-center">
           <Formik
@@ -28,7 +33,7 @@ function Register() {
               try {
                 await localApi.post(urls.REGISTER, values);
                 toast.success("Account created successfully");
-                navigate(links.Login);
+                navigate(links?.AccountVerify);
               } catch (error) {
                 toast.error("Account creation failed");
               }

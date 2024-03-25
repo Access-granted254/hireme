@@ -15,6 +15,7 @@ const ProjectDetail = React.lazy(() => import("../pages/ProjectDetail"));
 const ProjectDetails = React.lazy(() => import("../pages/ProjectDetails"));
 const Bids = React.lazy(() => import("../pages/Bids"));
 const VerifyEmail = React.lazy(() => import("../pages/VerifyEmail"));
+const AccountVerify = React.lazy(() => import("../pages/AccountVerify"));
 
 function BaseRouter() {
   return (
@@ -38,6 +39,7 @@ function BaseRouter() {
             path="/v1/users/verify-email/:uidb64/:token/"
             element={<VerifyEmail />}
           />
+          <Route path={links?.AccountVerify} element={<AccountVerify />} />
 
           <Route element={<PrivateRoute />}>
             <Route path={links?.Dashboard} element={<Dashboard />} />

@@ -7,6 +7,7 @@ const links = {
   Developer: "/register/developer",
   Projects: "/projects",
   Bids: "/bids",
+  AccountVerify: "/account/verify",
 };
 
 const urls = {
